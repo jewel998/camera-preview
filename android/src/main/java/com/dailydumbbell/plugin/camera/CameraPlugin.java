@@ -29,13 +29,10 @@ public class CameraPlugin extends Plugin implements CameraPreview.CameraPreviewL
     private static final boolean LOGGING = true;
     private String renderCallbackId = "";
     private int defaultOrientation = -1;
-
-    public CameraPlugin() {
-        camera = new CameraPreview(this.getActivity());
-    }
-
+    
     @PluginMethod
     public void initialize(PluginCall call) {
+        camera = new CameraPreview(this.getActivity());
         camera.initialize(call.getData());
         camera.setEventListener(this);
         call.resolve();
