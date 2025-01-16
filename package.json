@@ -1,6 +1,6 @@
 {
   "name": "@jewel998/camera-preview",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Canvas rendered camera plugin",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
