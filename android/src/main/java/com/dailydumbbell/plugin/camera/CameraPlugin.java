@@ -112,14 +112,18 @@ public class CameraPlugin extends Plugin implements CameraPreview.CameraPreviewL
 
     private void releasePreviousCallback() {
         if (renderCallbackId != "") {
-            bridge.getSavedCall(renderCallbackId).release(bridge);
+            try {
+                bridge.getSavedCall(renderCallbackId).release(bridge);
+            } catch (Exception e) {}
         }
     }
 
     @Override
     public void onFrameUpdate(JSObject frame) {
-        if (camera.mPreviewing) {
-            bridge.getSavedCall(renderCallbackId).resolve(frame);
+        if (camera.mPreviewing && renderCallbackId != "") {
+            try {
+                bridge.getSavedCall(renderCallbackId).resolve(frame);
+            } catch (Exception e) {}
         }
     }
 

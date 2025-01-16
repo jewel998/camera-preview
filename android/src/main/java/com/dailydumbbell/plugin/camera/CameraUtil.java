@@ -141,12 +141,17 @@ public class CameraUtil {
     public int[] getOptimalFrameRate(Camera.Parameters params, int mFps) {
         List<int[]> supportedRanges = params.getSupportedPreviewFpsRange();
 
-        int[] optimalFpsRange = new int[]{30, 30};
+        int[] optimalFpsRange = supportedRanges.get(0); // Default to the first range
+        int closestDifference = Integer.MAX_VALUE; // Initialize with the maximum possible difference
 
         for (int[] range : supportedRanges) {
-            optimalFpsRange = range;
-            if (range[1] <= (mFps * 1000)) {
-                break;
+            // Prioritize higher minimum frame rate first
+            if (range[0] >= optimalFpsRange[0]) {
+                int currentDifference = Math.abs(range[1] - (mFps * 1000)); // Compare max FPS to desired value
+                if (range[0] > optimalFpsRange[0] || currentDifference < closestDifference) {
+                    closestDifference = currentDifference;
+                    optimalFpsRange = range;
+                }
             }
         }
 

@@ -111,8 +111,8 @@ public class CameraPreview {
                 mCamera.setPreviewCallback(null);
                 mCamera.release();
                 mCamera = null;
-                renderThread.stop();
-                mThread.stop();
+                renderThread.interrupt();
+                mThread.interrupt();
                 log("Camera [" + mCameraId + "] stopped.");
                 mCameraId = 0;
             } catch (Exception e) {
