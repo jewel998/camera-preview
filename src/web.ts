@@ -1,8 +1,8 @@
 import { WebPlugin } from '@capacitor/core';
 
-import type { CameraInitOptions, CameraPlugin, RenderFrameCallback } from './definitions';
+import type { CameraInitOptions, ICameraPlugin, RenderFrameCallback } from './definitions';
 
-export class CameraWeb extends WebPlugin implements CameraPlugin {
+export class CameraWeb extends WebPlugin implements ICameraPlugin {
   private options!: Required<CameraInitOptions>;
   private render?: RenderFrameCallback;
   private video?: HTMLVideoElement;
@@ -15,7 +15,7 @@ export class CameraWeb extends WebPlugin implements CameraPlugin {
     this.setDefaultOptions();
   }
 
-  public init(options: CameraInitOptions): void {
+  public initialize(options: CameraInitOptions): void {
     this.options = { ...this.options, ...options };
   }
 
@@ -23,7 +23,7 @@ export class CameraWeb extends WebPlugin implements CameraPlugin {
     this.stream = await navigator.mediaDevices.getUserMedia({
       audio: false,
       video: {
-        facingMode: this.options.cameraFacing === 'front' ? 'user' : 'environment',
+        facingMode: 'user',
         width: this.options.width,
         height: this.options.height,
         aspectRatio: this.options.width / this.options.height,
@@ -38,9 +38,10 @@ export class CameraWeb extends WebPlugin implements CameraPlugin {
     video.style.display = 'none';
     video.muted = true;
     video.srcObject = this.stream;
+    video.height = this.options.height;
+    video.width = this.options.width;
     await video.play();
     this.video = video;
-
     this.canvas = document.createElement('canvas');
     this.isPreviewing = true;
     requestAnimationFrame(this.processFrame);

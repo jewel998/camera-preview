@@ -21,9 +21,9 @@ import com.getcapacitor.PermissionState;
 
 import org.json.JSONArray;
 
-@CapacitorPlugin(name = "CameraPreview", permissions = { @Permission(strings = { CAMERA }, alias = CameraPlugin.CAMERA_PERMISSION_ALIAS) })
+@CapacitorPlugin(name = "CameraPlugin", permissions = { @Permission(strings = { CAMERA }, alias = CameraPlugin.CAMERA_PERMISSION_ALIAS) })
 public class CameraPlugin extends Plugin implements CameraPreview.CameraPreviewListener {
-    private static final String TAG = "CameraPreview";
+    private static final String TAG = "CameraPlugin";
     static final String CAMERA_PERMISSION_ALIAS = "camera";
     private final CameraPreview camera = new CameraPreview(getActivity());
     private static final boolean LOGGING = true;
@@ -31,9 +31,10 @@ public class CameraPlugin extends Plugin implements CameraPreview.CameraPreviewL
     private int defaultOrientation = -1;
 
     @PluginMethod
-    public void init(PluginCall call) {
-        camera.init(call.getData());
+    public void initialize(PluginCall call) {
+        camera.initialize(call.getData());
         camera.setEventListener(this);
+        call.resolve();
     }
 
     @PluginMethod
@@ -54,6 +55,7 @@ public class CameraPlugin extends Plugin implements CameraPreview.CameraPreviewL
         }
         releasePreviousCallback();
         camera.stop();
+        call.resolve();
     }
 
     @PluginMethod
@@ -61,11 +63,13 @@ public class CameraPlugin extends Plugin implements CameraPreview.CameraPreviewL
         String orientation = call.getString("value", "portrait");
         assert orientation != null;
         camera.setCameraOrientation(orientation.equals("portrait") ? Configuration.ORIENTATION_PORTRAIT : Configuration.ORIENTATION_LANDSCAPE);
+        call.resolve();
     }
 
     @PluginMethod
     public void flip(PluginCall call) {
         camera.flip();
+        call.resolve();
     }
 
     @PluginMethod
@@ -85,9 +89,10 @@ public class CameraPlugin extends Plugin implements CameraPreview.CameraPreviewL
     public void setFlashMode(PluginCall call) {
         boolean isFlashOn = call.getBoolean("value", false);
         camera.setFlashMode(isFlashOn);
+        call.resolve();
     }
 
-    @PluginMethod(returnType = PluginMethod.RETURN_CALLBACK)
+    @PluginMethod()
     public void onRenderFrame(PluginCall call) {
         releasePreviousCallback();
         call.setKeepAlive(true);

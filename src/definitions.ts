@@ -11,8 +11,8 @@ export type CameraInitOptions = {
 export type Frame = { data: string; width: number; height: number; timestamp: number };
 export type RenderFrameCallback = (frame: Frame) => unknown;
 
-export interface CameraPlugin {
-  init(options: CameraInitOptions): void;
+export interface ICameraPlugin {
+  initialize(options: CameraInitOptions): void;
   start(): Promise<void>;
   stop(): Promise<void>;
   setOrientationChange(option: { value: 'portrait' | 'landscape' }): Promise<void>;

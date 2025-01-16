@@ -82,7 +82,7 @@ public class CameraPreview {
         eventListener = listener;
     }
 
-    public void init(JSONObject options) {
+    public void initialize(JSONObject options) {
         try {
             parseOptions(options);
         } catch (Exception e) {
