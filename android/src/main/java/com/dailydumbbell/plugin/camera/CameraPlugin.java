@@ -25,10 +25,14 @@ import org.json.JSONArray;
 public class CameraPlugin extends Plugin implements CameraPreview.CameraPreviewListener {
     private static final String TAG = "CameraPlugin";
     static final String CAMERA_PERMISSION_ALIAS = "camera";
-    private final CameraPreview camera = new CameraPreview(this.getActivity());
+    private CameraPreview camera;
     private static final boolean LOGGING = true;
     private String renderCallbackId = "";
     private int defaultOrientation = -1;
+
+    public CameraPlugin() {
+        camera = new CameraPreview(this.getActivity());
+    }
 
     @PluginMethod
     public void initialize(PluginCall call) {
