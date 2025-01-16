@@ -25,7 +25,7 @@ import org.json.JSONArray;
 public class CameraPlugin extends Plugin implements CameraPreview.CameraPreviewListener {
     private static final String TAG = "CameraPlugin";
     static final String CAMERA_PERMISSION_ALIAS = "camera";
-    private final CameraPreview camera = new CameraPreview(getActivity());
+    private final CameraPreview camera = new CameraPreview(this.getActivity());
     private static final boolean LOGGING = true;
     private String renderCallbackId = "";
     private int defaultOrientation = -1;
@@ -92,7 +92,7 @@ public class CameraPlugin extends Plugin implements CameraPreview.CameraPreviewL
         call.resolve();
     }
 
-    @PluginMethod()
+    @PluginMethod(returnType = PluginMethod.RETURN_CALLBACK)
     public void onRenderFrame(PluginCall call) {
         releasePreviousCallback();
         call.setKeepAlive(true);
