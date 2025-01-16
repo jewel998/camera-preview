@@ -19,7 +19,7 @@ npx cap sync
 
 <docgen-index>
 
-* [`init(...)`](#init)
+* [`initialize(...)`](#initialize)
 * [`start()`](#start)
 * [`stop()`](#stop)
 * [`setOrientationChange(...)`](#setorientationchange)
@@ -34,10 +34,10 @@ npx cap sync
 <docgen-api>
 <!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
 
-### init(...)
+### initialize(...)
 
 ```typescript
-init(options: CameraInitOptions) => void
+initialize(options: CameraInitOptions) => void
 ```
 
 | Param         | Type                                                            |

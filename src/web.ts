@@ -1,8 +1,8 @@
 import { WebPlugin } from '@capacitor/core';
 
-import type { CameraInitOptions, ICameraPlugin, RenderFrameCallback } from './definitions';
+import type { CameraInitOptions, CameraPlugin, RenderFrameCallback } from './definitions';
 
-export class CameraWeb extends WebPlugin implements ICameraPlugin {
+export class CameraWeb extends WebPlugin implements CameraPlugin {
   private options!: Required<CameraInitOptions>;
   private render?: RenderFrameCallback;
   private video?: HTMLVideoElement;

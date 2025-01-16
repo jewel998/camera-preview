@@ -1,10 +1,10 @@
 import { registerPlugin } from '@capacitor/core';
 
-import type { ICameraPlugin } from './definitions';
+import type { CameraPlugin } from './definitions';
 
-const CameraPlugin = registerPlugin<ICameraPlugin>('CameraPlugin', {
+const CanvasCamera = registerPlugin<CameraPlugin>('CanvasCamera', {
   web: () => import('./web').then((m) => new m.CameraWeb()),
 });
 
 export * from './definitions';
-export { CameraPlugin };
+export { CanvasCamera };

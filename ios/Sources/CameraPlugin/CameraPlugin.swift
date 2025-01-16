@@ -8,7 +8,7 @@ import Capacitor
 @objc(CameraPlugin)
 public class CameraPlugin: CAPPlugin, CAPBridgedPlugin {
     public let identifier = "CameraPlugin"
-    public let jsName = "CameraPlugin"
+    public let jsName = "CanvasCamera"
     public let pluginMethods: [CAPPluginMethod] = [
         CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise)
     ]
