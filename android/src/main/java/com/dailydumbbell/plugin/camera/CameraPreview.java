@@ -24,7 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class CameraPreview {
-    private static final String TAG = "Camera";
+    private static final String TAG = "CameraPreview";
 
     public interface CameraPreviewListener {
         void onFrameUpdate(JSObject frame);

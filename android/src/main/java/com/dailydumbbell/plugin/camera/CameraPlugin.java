@@ -21,9 +21,9 @@ import com.getcapacitor.PermissionState;
 
 import org.json.JSONArray;
 
-@CapacitorPlugin(name = "Camera", permissions = { @Permission(strings = { CAMERA }, alias = CameraPlugin.CAMERA_PERMISSION_ALIAS) })
+@CapacitorPlugin(name = "CameraPreview", permissions = { @Permission(strings = { CAMERA }, alias = CameraPlugin.CAMERA_PERMISSION_ALIAS) })
 public class CameraPlugin extends Plugin implements CameraPreview.CameraPreviewListener {
-    private static final String TAG = "Camera";
+    private static final String TAG = "CameraPreview";
     static final String CAMERA_PERMISSION_ALIAS = "camera";
     private final CameraPreview camera = new CameraPreview(getActivity());
     private static final boolean LOGGING = true;
