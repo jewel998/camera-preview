@@ -29,7 +29,7 @@ public class CameraPlugin extends Plugin implements CameraPreview.CameraPreviewL
     private static final boolean LOGGING = true;
     private String renderCallbackId = "";
     private int defaultOrientation = -1;
-    
+
     @PluginMethod
     public void initialize(PluginCall call) {
         camera = new CameraPreview(this.getActivity());
@@ -118,23 +118,33 @@ public class CameraPlugin extends Plugin implements CameraPreview.CameraPreviewL
 
     @Override
     public void onFrameUpdate(JSObject frame) {
-        bridge.getSavedCall(renderCallbackId).resolve(frame);
+        if (camera.mPreviewing) {
+            bridge.getSavedCall(renderCallbackId).resolve(frame);
+        }
     }
 
 
     private void startCamera(PluginCall call) {
-        if (defaultOrientation != -1) {
-            defaultOrientation = getBridge().getActivity().getRequestedOrientation();
-        }
-        getBridge().getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+        bridge
+            .getActivity()
+            .runOnUiThread(new Runnable() {
 
-        boolean hasStarted = camera.start();
+                @Override
+                public void run() {
+                    if (defaultOrientation != -1) {
+                        defaultOrientation = getBridge().getActivity().getRequestedOrientation();
+                    }
+                    getBridge().getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
-        if (hasStarted) {
-            call.resolve();
-        } else {
-            call.reject("Could not start camera!");
-        }
+                    boolean hasStarted = camera.start();
+
+                    if (hasStarted) {
+                        call.resolve();
+                    } else {
+                        call.reject("Could not start camera!");
+                    }
+                }
+            });
     }
 
     private void debug(@NonNull String log) {
